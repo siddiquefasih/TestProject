@@ -7,6 +7,7 @@ import {
   KeyboardAvoidingView,
   LayoutAnimation,
   ScrollView,
+  StatusBar,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -116,11 +117,12 @@ const App = () => {
   const {width} = Dimensions.get('window');
   const [value, setValue] = useState(100);
   const [content, setContent] = useState(data[0]?.content);
+  const [check, setCheck] = useState(false);
   return (
     <KeyboardAvoidingView
       behavior="padding"
       style={{
-        marginTop: 40,
+        paddingTop: 40,
         backgroundColor: Colors.background,
         flex: 1,
       }}>
@@ -290,28 +292,35 @@ const App = () => {
             }}>
             {` Which type of "${title}" content are you creating?`}
           </Text>
-          <DropDownInput data={content} />
+          <DropDownInput
+            data={content}
+            check={() => {
+              setCheck(true);
+            }}
+          />
 
-          <View
-            style={{
-              width: width - 100,
-              height: 40,
-              alignSelf: 'center',
-            }}>
+          {check && (
             <View
               style={{
-                width: 40,
+                width: width - 100,
                 height: 40,
-                backgroundColor: Colors.blue,
-                alignItems: 'center',
-                justifyContent: 'center',
-                marginLeft: (value / 1000) * (width - 100) - 35,
-                borderRadius: 12,
+                alignSelf: 'center',
               }}>
-              <Text style={{color: Colors.white}}>{value}</Text>
+              <View
+                style={{
+                  width: 40,
+                  height: 40,
+                  backgroundColor: Colors.blue,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  marginLeft: (value / 1000) * (width - 100) - 35,
+                  borderRadius: 12,
+                }}>
+                <Text style={{color: Colors.white}}>{value}</Text>
+              </View>
             </View>
-          </View>
-          {content?.length && (
+          )}
+          {check && (
             <View
               style={{
                 flexDirection: 'row',

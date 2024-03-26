@@ -11,7 +11,7 @@ import React, {useEffect, useState} from 'react';
 import Colors from '../Colors';
 import Icons from '../assets/index';
 
-const DropDownInput = ({data}) => {
+const DropDownInput = ({data, check}) => {
   const [dropDown, setDropDown] = useState(false);
   const [selected, setSelected] = useState('');
   const [newData, setNewData] = useState([...data]);
@@ -89,6 +89,8 @@ const DropDownInput = ({data}) => {
               onPress={() => {
                 LayoutAnimation.easeInEaseOut();
                 setSelected(item?.title);
+                check();
+
                 setDropDown(false);
               }}
               style={{
