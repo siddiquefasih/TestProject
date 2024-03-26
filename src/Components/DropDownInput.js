@@ -7,24 +7,27 @@ import {
   ScrollView,
   TextInput,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Colors from '../Colors';
 import Icons from '../assets/index';
 
-const DropDownInput = ({data = []}) => {
+const DropDownInput = ({data}) => {
   const [dropDown, setDropDown] = useState(false);
   const [selected, setSelected] = useState('');
   const [newData, setNewData] = useState([...data]);
 
+  useEffect(() => {
+    setSelected('');
+    setNewData(data);
+  }, [data]);
+
   const onChangeText = text => {
-    const newData = data.filter(item =>
-      item.name.toLowerCase().includes(text.toLowerCase()),
+    const newData = data?.filter(item =>
+      item?.title?.toLowerCase().includes(text?.toLowerCase()),
     );
     setSelected(text);
     setNewData(newData);
   };
-
-  console.log(newData);
 
   return (
     <View
@@ -37,6 +40,7 @@ const DropDownInput = ({data = []}) => {
         marginTop: 25,
         overflow: 'hidden',
         marginBottom: 20,
+        backgroundColor: Colors.grey,
       }}>
       <View
         onPress={() => {
@@ -84,7 +88,7 @@ const DropDownInput = ({data = []}) => {
               activeOpacity={0.8}
               onPress={() => {
                 LayoutAnimation.easeInEaseOut();
-                setSelected(item.name);
+                setSelected(item?.title);
                 setDropDown(false);
               }}
               style={{
@@ -95,7 +99,7 @@ const DropDownInput = ({data = []}) => {
                 borderColor: Colors.background,
               }}>
               <Text style={{fontSize: 12, color: Colors.white}}>
-                {item?.name}
+                {item?.title}
               </Text>
             </TouchableOpacity>
           ))}

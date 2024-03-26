@@ -20,20 +20,102 @@ import DropDownInput from './src/Components/DropDownInput';
 import GradientSlider from './src/Components/GradientSlider';
 
 const data = [
-  {title: 'Fun'},
-  {title: 'Education'},
-  {title: 'Sports'},
-  {title: 'News'},
-  {title: 'Investment'},
-  {title: 'Facts'},
+  {
+    title: 'Fun',
+    content: [
+      {title: 'Board games revival'},
+      {title: 'Comedy trends'},
+      {title: 'Amusement parks'},
+      {title: 'Escape rooms'},
+      {title: 'Street performances'},
+      {title: 'Online challenges'},
+      {title: 'Festivals impact'},
+      {title: 'Crafting movement'},
+      {title: 'Social gaming'},
+      {title: 'Virtual reality'},
+    ],
+  },
+  {
+    title: 'Education',
+    content: [
+      {title: 'Gamified learning'},
+      {title: 'Education systems'},
+      {title: 'Bilingual benefits'},
+      {title: 'Standardized testing'},
+      {title: 'Arts in schools'},
+      {title: 'Tech bootcamps'},
+      {title: 'Homeschooling dynamics'},
+      {title: 'Mentorship importance'},
+      {title: 'Educational equity'},
+      {title: 'Mobile learning'},
+    ],
+  },
+  {
+    title: 'Sports',
+    content: [
+      {title: 'Sports medicine'},
+      {title: 'Team sociology'},
+      {title: 'Olympic economics'},
+      {title: 'Gender parity'},
+      {title: 'Fandom psychology'},
+      {title: 'Extreme sports'},
+      {title: 'Sports business'},
+      {title: 'Youth athletics'},
+      {title: 'Data analytics'},
+      {title: 'Doping ethics'},
+    ],
+  },
+  {
+    title: 'News',
+    content: [
+      {title: 'Citizen journalism'},
+      {title: 'Whistleblower influence'},
+      {title: 'Fake news'},
+      {title: 'Print media survival'},
+      {title: 'Social media news'},
+      {title: 'Cybersecurity news'},
+      {title: 'Democratic media'},
+      {title: 'News deserts'},
+      {title: 'News economics'},
+      {title: 'Broadcast evolution'},
+    ],
+  },
+  {
+    title: 'Investment',
+    content: [
+      {title: 'Robo-advising'},
+      {title: 'Geopolitical impacts'},
+      {title: 'Index funds'},
+      {title: 'Real estate trends'},
+      {title: 'Startup investing'},
+      {title: 'Social trading'},
+      {title: 'Tax strategies'},
+      {title: 'Emerging markets'},
+      {title: 'Financial literacy'},
+      {title: 'Pension futures'},
+    ],
+  },
+  {
+    title: 'Facts',
+    content: [
+      {title: 'Animal oddities'},
+      {title: 'Everyday science'},
+      {title: 'Historical obscurities'},
+      {title: 'Science myths'},
+      {title: 'Human body facts'},
+      {title: 'Oceanic discoveries'},
+      {title: 'Space exploration'},
+      {title: 'Ancient tech'},
+      {title: 'World laws'},
+      {title: 'Bizarre news'},
+    ],
+  },
 ];
 const App = () => {
   const [title, setTitle] = useState('Fun');
-  const [count, setCount] = useState(100);
   const {width} = Dimensions.get('window');
   const [value, setValue] = useState(100);
-  const [min, setMin] = useState(100);
-  const [max, setMax] = useState(1000);
+  const [content, setContent] = useState(data[0]?.content);
   return (
     <KeyboardAvoidingView
       behavior="padding"
@@ -134,6 +216,8 @@ const App = () => {
               fontSize: 14,
               marginTop: 5,
               marginBottom: 10,
+              borderBottomWidth: 1,
+              borderBottomColor: 'white',
             }}>
             Choose a content type that best fits your needs.
           </Text>
@@ -141,7 +225,7 @@ const App = () => {
             style={{
               height: 0.9,
               marginVertical: 20,
-              backgroundColor: Colors.grey,
+              backgroundColor: Colors.lightText,
             }}
           />
           <Text
@@ -168,6 +252,8 @@ const App = () => {
                     onPress={() => {
                       LayoutAnimation.spring();
                       setTitle(item?.title);
+                      console.log(item?.content, 'jhgfdxzxfgh');
+                      setContent(item?.content);
                     }}
                     activeOpacity={0.8}
                     style={{
@@ -204,18 +290,7 @@ const App = () => {
             }}>
             {` Which type of "${title}" content are you creating?`}
           </Text>
-          <DropDownInput
-            data={[
-              {name: 'helloh'},
-              {name: 'jjda'},
-              {name: 'jjda'},
-              {name: 'jjda'},
-              {name: 'jjda'},
-              {name: 'jjda'},
-              {name: 'jjda'},
-              {name: 'jjda'},
-            ]}
-          />
+          <DropDownInput data={content} />
 
           <View
             style={{
@@ -236,31 +311,33 @@ const App = () => {
               <Text style={{color: Colors.white}}>{value}</Text>
             </View>
           </View>
-          <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              width: width - 40,
-            }}>
-            <Text style={{color: Colors.white, width: 40}}>100</Text>
-            <View>
-              <GradientSlider
-                style={{width: width - 120}}
-                step={100}
-                minimumValue={min}
-                maximumValue={max}
-                value={value}
-                onValueChange={val => setValue(val)}
-                thumbTintColor="rgb(252, 228, 149)"
-                maximumTrackTintColor="#d3d3d3"
-                minimumTrackTintColor="rgb(252, 228, 149)"
-              />
+          {content?.length && (
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                width: width - 40,
+              }}>
+              <Text style={{color: Colors.white, width: 40}}>100</Text>
+              <View>
+                <GradientSlider
+                  style={{width: width - 120}}
+                  step={100}
+                  minimumValue={100}
+                  maximumValue={1000}
+                  value={value}
+                  onValueChange={val => setValue(val)}
+                  thumbTintColor="rgb(252, 228, 149)"
+                  maximumTrackTintColor="#d3d3d3"
+                  minimumTrackTintColor="rgb(252, 228, 149)"
+                />
+              </View>
+              <Text
+                style={{color: Colors.white, width: 40, textAlign: 'right'}}>
+                1000
+              </Text>
             </View>
-            <Text style={{color: Colors.white, width: 40, textAlign: 'right'}}>
-              1000
-            </Text>
-          </View>
-
+          )}
           <TouchableOpacity
             activeOpacity={0.8}
             style={{
@@ -274,7 +351,12 @@ const App = () => {
               flexDirection: 'row',
               paddingHorizontal: 20,
             }}>
-            <GradientText style={styles.textStyle}>Next</GradientText>
+            <GradientText
+              style={{
+                fontSize: 16,
+              }}>
+              Next
+            </GradientText>
             <View
               style={{
                 flexDirection: 'row',
